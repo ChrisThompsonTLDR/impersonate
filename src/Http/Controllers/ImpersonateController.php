@@ -25,10 +25,10 @@ class ImpersonateController extends Controller
 
     public function stop()
     {
-        Auth::user()->stopImpersonating();
+        session()->forget('impersonate');
 
         session()->flash(config('impersonate.flash.success', 'success'), 'Impersonation ended.');
 
-        return redirect()->to(config('impersonate.routes.afterStart', '/'));
+        return redirect()->to(config('impersonate.routes.afterStop', '/'));
     }
 }
