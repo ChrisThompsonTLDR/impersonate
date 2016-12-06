@@ -1,6 +1,6 @@
 <?php
 
-namespace Christhompsontldr\Impersonate;
+namespace Christhompsontldr\Impersonate\Commands;
 
 use Illuminate\Console\Command;
 

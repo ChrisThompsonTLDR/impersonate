@@ -1,10 +1,10 @@
 <?php
 
-namespace Christhompsontldr\Impersonate;
+namespace Christhompsontldr\Impersonate\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Config;
-use Christhompsontldr\Impersonate\Models\Traits\Impersonate;
+use Christhompsontldr\Impersonate\Models\Traits\Impersonatable;
 use Traitor\Traitor;
 
 class AddTraitCommand extends Command
@@ -14,14 +14,14 @@ class AddTraitCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'inpersonate:add-trait';
+    protected $signature = 'impersonate:add-trait';
 
     /**
      * Trait added to User model
      *
      * @var string
      */
-    protected $targetTrait = Impersonate::class;
+    protected $targetTrait = Impersonatable::class;
 
     /**
      * Execute the console command.
