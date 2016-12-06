@@ -24,7 +24,7 @@ After updating composer, add the ServiceProvider to the providers array in confi
 Christhompsontldr\Impersonate\ImpersonateServiceProvider::class,
 ```
 
-### Setup (not required)
+### Setup
 
 The next command will create migrations, create the `Role` and `Permission` models and add traits to your application's User model.
 
