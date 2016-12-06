@@ -5,14 +5,14 @@ namespace Christhompsontldr\Impersonate\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Auth;
 
-class MembershipController extends Controller
+class ImpersonateController extends Controller
 {
     public function start($id)
     {
         // valid user
         $userModel = config('auth.providers.users.model', 'App\User');
 
-        $user = $userModel::firstOrFail($id);
+        $user = $userModel::findOrFail($id);
 
         if ($user && Auth::user()->canImpersonate($id)) {
             Auth::user()->startImpersonating($user->id);

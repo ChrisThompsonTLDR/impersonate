@@ -1,7 +1,8 @@
 <?php
+
 namespace Christhompsontldr\Impersonate\Models\Traits;
 
-trait Impersonate
+trait Impersonatable
 {
 
     /**
@@ -39,7 +40,7 @@ trait Impersonate
      *
      * @param mixed $id
      */
-    public function canImperonsate($id)
+    public function canImpersonate($id)
     {
         return true;
     }

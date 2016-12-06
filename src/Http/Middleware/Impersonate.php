@@ -1,5 +1,10 @@
 <?php
 
+namespace Christhompsontldr\Impersonate\Http\Middleware;
+
+use Closure;
+use Auth;
+
 class Impersonate
 {
     /**
@@ -7,9 +12,9 @@ class Impersonate
      */
     public function handle($request, Closure $next)
     {
-        if($request->session()->has('impersonate'))
+        if(session()->has('impersonate'))
         {
-            Auth::onceUsingId($request->session()->get('impersonate'));
+            Auth::onceUsingId(session()->get('impersonate'));
         }
 
         return $next($request);

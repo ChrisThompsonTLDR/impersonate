@@ -3,6 +3,7 @@
 namespace Christhompsontldr\Impersonate;
 
 use Illuminate\Routing\Router;
+use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\ServiceProvider;
 use Christhompsontldr\Impersonate\Commands\PublishCommand;
 use Christhompsontldr\Impersonate\Commands\SetupCommand;
@@ -10,9 +11,9 @@ use Christhompsontldr\Impersonate\Commands\AddTraitCommand;
 
 class ImpersonateServiceProvider extends ServiceProvider
 {
-    public function boot(Router $router)
+    public function boot(Router $router, Kernel $kernel)
     {
-        $router->middleware('impersonate', 'Christhompsontldr\Impersonate\Middleware\Impersonate');
+        $router->pushMiddlewareToGroup('web', \Christhompsontldr\Impersonate\Http\Middleware\Impersonate::class);
 
         if (!$this->app->routesAreCached()) {
             $this->setupRoutes($this->app->router);
@@ -26,6 +27,10 @@ class ImpersonateServiceProvider extends ServiceProvider
                 AddTraitCommand::class,
             ]);
         }
+
+        $this->publishes([
+            realpath(dirname(__DIR__)) . '/config/impersonate.php' => config_path('impersonate.php'),
+        ], 'impersonateconfig');
     }
 
     /**
@@ -48,8 +53,6 @@ class ImpersonateServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             realpath(dirname(__DIR__)) . '/config/impersonate.php', 'impersonate'
         );
-
-        parent::register();
     }
 }
 

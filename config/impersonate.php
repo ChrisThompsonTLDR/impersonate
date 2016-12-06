@@ -3,7 +3,7 @@ return [
     'require_debug' => false,  //  only allow impersonation if debugging is enabled
 
     'routes' => [
-        'prefix'     => 'users',
+        'prefix'     => 'admin/users',
         'start'      => 'impersonate/{id}',
         'stop'       => 'impersonate/stop',
         'afterStart' => '/',  //  where user goes after starting impersonation

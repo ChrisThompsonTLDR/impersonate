@@ -11,7 +11,7 @@ class PublishCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'inpersonate:publish';
+    protected $signature = 'impersonate:publish';
 
     /**
      * The console command description.
@@ -23,8 +23,6 @@ class PublishCommand extends Command
     public function handle()
     {
         // publish configs
-        $this->publishes([
-           realpath(dirname(__DIR__)) . '/config/impersonate.php' => config_path('impersonate.php'),
-        ]);
+        $this->call('vendor:publish', ['--tag' => 'impersonateconfig']);
     }
 }
