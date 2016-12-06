@@ -1,0 +1,25 @@
+{
+    "name": "christhompsontldr/impersonate",
+    "description": "Allows a user to impersonate another user.",
+    "authors": [
+        {
+            "name": "Chris Thompson",
+            "email": "christhompsontldr@gmail.com",
+            "homepage": "https://christhompsontldr.com"
+        }
+    ],
+    "keywords": ["laravel", "user management"],
+    "support": {
+        "issues": "https://github.com/christhompsontldr/impersonate/issues",
+        "source": "https://github.com/christhompsontldr/impersonate"
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "kkszymanowski/traitor": "^0.2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Christhompsontldr\\Impersonate\\": "src/"
+        }
+    }
+}
