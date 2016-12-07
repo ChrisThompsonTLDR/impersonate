@@ -2,8 +2,6 @@
 
 Allow a user to impersonate another user.
 
-It is currently under heavy development and not recommended for production environments.
-
 ## Installation
 
 ### Composer
@@ -26,17 +24,19 @@ Christhompsontldr\Impersonate\ImpersonateServiceProvider::class,
 
 ### Setup
 
-The next command will create migrations, create the `Role` and `Permission` models and add traits to your application's User model.
+This will apply a trait to the user model configured in `config/auth.php`.  `setup` runs both the `add-trait` and `publish` commands.
 
 ```
 php artisan impersonate:setup
 ```
 
-This will run two commands (which can be run independently
+This will run two commands (which can be run independently:
 ```
 php artisan impersonate:add-trait
 php artisan impersonate:publish
 ```
+
+`publish` publishes the config and `add-trait` applies a trait to the user model.
 
 ## Source
 
