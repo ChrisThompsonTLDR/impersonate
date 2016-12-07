@@ -13,5 +13,13 @@ return [
     'flash' => [
         'error'   => 'error',  //  what errors are keyed with
         'success' => 'success'  //  what errors are keyed with
+    ],
+
+    'btn' => [
+        'id' => 'btn-impersonate',
+        'class' => 'btn btn-sm btn-danger',
+        'style' => 'position: absolute;top: 0;right: 0;',
+        'icon' => 'glyphicon glyphicon-repeat',
+        'text' => '',
     ]
 ];
