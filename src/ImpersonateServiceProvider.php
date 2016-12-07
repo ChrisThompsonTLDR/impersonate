@@ -13,7 +13,7 @@ class ImpersonateServiceProvider extends ServiceProvider
 {
     public function boot(Router $router, Kernel $kernel)
     {
-        $router->pushMiddlewareToGroup('web', \Christhompsontldr\Impersonate\Http\Middleware\Impersonate::class);
+        $router->pushMiddlewareToGroup(config('impersonate.routes.middlewareGroup', 'web'), \Christhompsontldr\Impersonate\Http\Middleware\Impersonate::class);
 
         if (!$this->app->routesAreCached()) {
             $this->setupRoutes($this->app->router);
