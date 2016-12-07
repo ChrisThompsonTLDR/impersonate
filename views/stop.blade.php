@@ -1,0 +1,1 @@
+<a href="{{ config('impersonate.routes.stop') }}" id="btn-impersonate" class="btn btn-sm btn-danger" style="position: absolute;top: 0;right: 0;"><span class="glyphicon glyphicon-repeat"></span></a>

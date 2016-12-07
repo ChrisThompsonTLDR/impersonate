@@ -28,9 +28,12 @@ class ImpersonateServiceProvider extends ServiceProvider
             ]);
         }
 
+        //  this is used by the PublishCommand
         $this->publishes([
-            realpath(dirname(__DIR__)) . '/config/impersonate.php' => config_path('impersonate.php'),
+            realpath(dirname(__DIR__) . '/config/impersonate.php') => config_path('impersonate.php'),
         ], 'impersonateconfig');
+
+        $this->loadViewsFrom(realpath(dirname(__DIR__) . '/views'), 'impersonate');
     }
 
     /**
