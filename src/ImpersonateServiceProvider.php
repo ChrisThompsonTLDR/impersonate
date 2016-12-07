@@ -3,7 +3,6 @@
 namespace Christhompsontldr\Impersonate;
 
 use Illuminate\Routing\Router;
-use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Support\ServiceProvider;
 use Christhompsontldr\Impersonate\Commands\PublishCommand;
 use Christhompsontldr\Impersonate\Commands\SetupCommand;
@@ -11,7 +10,7 @@ use Christhompsontldr\Impersonate\Commands\AddTraitCommand;
 
 class ImpersonateServiceProvider extends ServiceProvider
 {
-    public function boot(Router $router, Kernel $kernel)
+    public function boot(Router $router)
     {
         $router->pushMiddlewareToGroup(config('impersonate.routes.middlewareGroup', 'web'), \Christhompsontldr\Impersonate\Http\Middleware\Impersonate::class);
 
@@ -19,7 +18,7 @@ class ImpersonateServiceProvider extends ServiceProvider
             $this->setupRoutes($this->app->router);
         }
 
-        //  create the `php artisan impersonate:publish` command
+        //  create the commands
         if ($this->app->runningInConsole()) {
             $this->commands([
                 PublishCommand::class,
@@ -46,7 +45,7 @@ class ImpersonateServiceProvider extends ServiceProvider
     {
         $router->group(['namespace' => 'Christhompsontldr\Impersonate\Http\Controllers'], function($router)
         {
-            require __DIR__.'/Http/routes.php';
+            require __DIR__ . '/Http/routes.php';
         });
     }
 
