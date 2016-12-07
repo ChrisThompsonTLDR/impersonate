@@ -12,11 +12,18 @@ class Impersonate
      */
     public function handle($request, Closure $next)
     {
+        //  check if requiring debug
         if (config('impersonate.require_debug') && !config('app.debug')) {
             session()->forget('impersonate');
         }
 
-        if(session()->has('impersonate')) {
+        //  no auth, no impersonate
+        if (Auth::guest() && session()->has('impersonate')) {
+            session()->forget('impersonate');
+        }
+
+        //  start the impersonation
+        if(!$request->is(str_replace('{id}', '*', config('impersonate.routes.start'))) && session()->has('impersonate')) {
             Auth::onceUsingId(session()->get('impersonate'));
         }
 

@@ -14,13 +14,18 @@ class ImpersonateController extends Controller
 
         $user = $userModel::findOrFail($id);
 
+        //  successful
         if ($user && Auth::user()->canImpersonate($id)) {
             Auth::user()->startImpersonating($user->id);
-        } else {
-            session()->flash(config('impersonate.flash.error', 'error'), 'You can not impersonate that user.');
+
+            session()->flash(config('impersonate.flash.success', 'success'), 'Impersonation started.');
+
+            return redirect()->to(config('impersonate.routes.afterStart', '/'));
         }
 
-        return redirect()->to(config('impersonate.routes.afterStart', '/'));
+        session()->flash(config('impersonate.flash.error', 'error'), 'You can not impersonate that user.');
+
+        return redirect()->back();
     }
 
     public function stop()

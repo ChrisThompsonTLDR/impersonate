@@ -38,6 +38,25 @@ php artisan impersonate:publish
 
 `publish` publishes the config and `add-trait` applies a trait to the user model.
 
+## Access Control
+
+You must complete this step, or none of your users will have permission to impersonate.
+
+The authorized users that can impersonate and which users they can impersonate is controlled via the trait.  This can be overloaded on your user model
+
+```
+public function canImpersonate($id)
+{
+    return $this->is_admin ?: false;
+}
+```
+
+In this example, the user model has an `is_admin` attribute that is being checked.
+
+## Issues
+
+Log out will be performed on both the main user and the impersonated user.
+
 ## Source
 
 This package is based off an example located [here](http://blog.mauriziobonani.com/easily-impersonate-any-user-in-a-laravel-application/).

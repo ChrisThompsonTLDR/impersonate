@@ -42,6 +42,6 @@ trait Impersonatable
      */
     public function canImpersonate($id)
     {
-        return true;
+        return false;
     }
 }
