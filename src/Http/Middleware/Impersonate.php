@@ -12,6 +12,10 @@ class Impersonate
      */
     public function handle($request, Closure $next)
     {
+        if (config('impersonate.require_debug') && !config('app.debug')) {
+            session()->forget('impersonate');
+        }
+
         if(session()->has('impersonate'))
         {
             Auth::onceUsingId(session()->get('impersonate'));
