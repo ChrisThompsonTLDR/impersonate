@@ -27,13 +27,10 @@ class Impersonate
             Auth::onceUsingId(session()->get('impersonate'));
         }
 
-        return $next($request);
-    }
-
-    public function terminate($request, $response)
-    {
         if(session()->has('impersonate')) {
             echo view('impersonate::stop');
         }
+
+        return $next($request);
     }
 }
