@@ -27,10 +27,18 @@ class Impersonate
             Auth::onceUsingId(session()->get('impersonate'));
         }
 
+        $response = $next($request);
+
         if(session()->has('impersonate')) {
-            echo view('impersonate::stop');
+            $bar = view('impersonate::stop');
+
+            $content = $response->content();
+
+            $content = preg_replace('!(<body[^>]*>)!', '$1' . $bar, $content, 1);
+
+            $response->setContent($content);
         }
 
-        return $next($request);
+        return $response;
     }
 }
