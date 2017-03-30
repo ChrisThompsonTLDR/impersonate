@@ -29,7 +29,7 @@ class Impersonate
 
         $response = $next($request);
 
-        if(session()->has('impersonate')) {
+        if(Auth::check() && session()->has('impersonate')) {
             $bar = view('impersonate::stop');
 
             $content = $response->content();
