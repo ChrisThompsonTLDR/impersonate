@@ -30,7 +30,12 @@ class Impersonate
         $response = $next($request);
 
         if(Auth::check() && session()->has('impersonate')) {
-            $bar = view('impersonate::stop');
+            $blade = 'impersonate::stop';
+            if (config('impersonate.blade') != null) {
+                $blade = config('impersonate.blade');
+            }
+
+            $bar = view($blade);
 
             $content = $response->content();
 
