@@ -14,7 +14,7 @@ return [
     'flash' => [
         'error'   => 'error',  //  what errors are keyed with
         'success' => 'success'  //  what errors are keyed with
-    ]
+    ],
 
     'blade' => null,
 ];
