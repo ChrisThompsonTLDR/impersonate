@@ -30,7 +30,7 @@ class ImpersonateController extends Controller
 
     public function stop()
     {
-        session()->forget('impersonate');
+        auth()->user()->stopImpersonating();
 
         session()->flash(config('impersonate.flash.success', 'success'), 'Impersonation ended.');
 
