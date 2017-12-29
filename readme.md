@@ -71,4 +71,4 @@ Log out will be performed on both the main user and the impersonated user.
 
 ## Source
 
-This package is based off an [this example.](http://blog.mauriziobonani.com/easily-impersonate-any-user-in-a-laravel-application/).
+This package is based off an [this example](http://blog.mauriziobonani.com/easily-impersonate-any-user-in-a-laravel-application/).
