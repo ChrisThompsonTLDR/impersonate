@@ -45,7 +45,7 @@ class ImpersonateServiceProvider extends ServiceProvider
     {
         $router->group(['namespace' => 'Christhompsontldr\Impersonate\Http\Controllers'], function($router)
         {
-            require __DIR__ . '/Http/routes.php';
+            require __DIR__ . '/routes/web.php';
         });
     }
 

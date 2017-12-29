@@ -3,7 +3,6 @@
 namespace Christhompsontldr\Impersonate\Http\Middleware;
 
 use Closure;
-use Auth;
 
 class Impersonate
 {
@@ -18,18 +17,21 @@ class Impersonate
         }
 
         //  no auth, no impersonate
-        if (Auth::guest() && session()->has('impersonate')) {
+        if (auth()->guest() && session()->has('impersonate')) {
             session()->forget('impersonate');
         }
 
         //  start the impersonation
         if(!$request->is(str_replace('{id}', '*', config('impersonate.routes.start'))) && session()->has('impersonate')) {
-            Auth::onceUsingId(session()->get('impersonate'));
+            auth()->onceUsingId(session()->get('impersonate'));
         }
 
         $response = $next($request);
 
-        if(Auth::check() && session()->has('impersonate')) {
+        /**
+         *  Inject the configured blade into the view.
+         */
+        if(auth()->check() && session()->has('impersonate')) {
             $blade = 'impersonate::stop';
             if (config('impersonate.blade') != null) {
                 $blade = config('impersonate.blade');

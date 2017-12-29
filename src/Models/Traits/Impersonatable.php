@@ -8,7 +8,7 @@ trait Impersonatable
     /**
      * Start impersonating this user
      *
-     * @param mixed $id
+     * @param integer $id user.id to impersonate
      */
     public function startImpersonating($id)
     {
@@ -17,8 +17,6 @@ trait Impersonatable
 
     /**
      * Stop impersonating
-     *
-     * @param mixed $id
      */
     public function stopImpersonating()
     {
@@ -26,9 +24,7 @@ trait Impersonatable
     }
 
     /**
-     * Current impersonating
-     *
-     * @param mixed $id
+     * Is the user currently impersonating another user
      */
     public function isImpersonating()
     {
@@ -38,7 +34,7 @@ trait Impersonatable
     /**
      * Logic for checking if the current user can impersonate the user id.
      *
-     * @param mixed $id
+     * @param integer $id user.id of the user the logged in user wants to impersonate
      */
     public function canImpersonate($id)
     {

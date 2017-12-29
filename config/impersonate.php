@@ -16,5 +16,5 @@ return [
         'success' => 'success'  //  what errors are keyed with
     ],
 
-    'blade' => null,
+    'blade' => 'impersonate::stop',  //  set to null to disable/show no blade
 ];

@@ -3,10 +3,15 @@
 namespace Christhompsontldr\Impersonate\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use Auth;
 
 class ImpersonateController extends Controller
 {
+
+    /**
+     * Action to begin impersonation
+     *
+     * @param integer $id user.id that will be impersonated
+     */
     public function start($id)
     {
         // valid user
@@ -15,8 +20,8 @@ class ImpersonateController extends Controller
         $user = $userModel::findOrFail($id);
 
         //  successful
-        if ($user && Auth::user()->canImpersonate($id)) {
-            Auth::user()->startImpersonating($user->id);
+        if ($user && auth()->user()->canImpersonate($id)) {
+            auth()->user()->startImpersonating($user->id);
 
             session()->flash(config('impersonate.flash.success', 'success'), 'Impersonation started.');
 
@@ -28,6 +33,10 @@ class ImpersonateController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * Action to end impersonation
+     *
+     */
     public function stop()
     {
         auth()->user()->stopImpersonating();
