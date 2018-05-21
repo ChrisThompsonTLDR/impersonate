@@ -3,6 +3,8 @@
 namespace Christhompsontldr\Impersonate\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Christhompsontldr\Impersonate\Events\ImpersonatingStart;
+use Christhompsontldr\Impersonate\Events\ImpersonatingStop;
 
 class ImpersonateController extends Controller
 {
@@ -21,9 +23,13 @@ class ImpersonateController extends Controller
 
         //  successful
         if ($user && auth()->user()->canImpersonate($id)) {
+            $realUser = auth()->user();
+
             auth()->user()->startImpersonating($user->id);
 
             session()->flash(config('impersonate.flash.success', 'success'), 'Impersonation started.');
+
+            event(new ImpersonatingStart($realUser, $user));
 
             return redirect()->to(config('impersonate.routes.afterStart', '/'));
         }
@@ -39,9 +45,15 @@ class ImpersonateController extends Controller
      */
     public function stop()
     {
+        $user = auth()->user();
+
         auth()->user()->stopImpersonating();
 
+        $realUser = auth()->user();
+
         session()->flash(config('impersonate.flash.success', 'success'), 'Impersonation ended.');
+
+        event(new ImpersonatingStart($realUser, $user));
 
         return redirect()->to(config('impersonate.routes.afterStop', '/'));
     }
