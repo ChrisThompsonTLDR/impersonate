@@ -22,7 +22,7 @@ class Impersonate
         }
 
         //  start the impersonation
-        if(!$request->is(str_replace('{id}', '*', config('impersonate.routes.start'))) && session()->has('impersonate')) {
+        if(!$request->is(str_replace('{user}', '*', config('impersonate.routes.start'))) && session()->has('impersonate')) {
             auth()->onceUsingId(session()->get('impersonate'));
         }
 
@@ -32,12 +32,7 @@ class Impersonate
          *  Inject the configured blade into the view.
          */
         if(auth()->check() && session()->has('impersonate')) {
-            $blade = 'impersonate::stop';
-            if (config('impersonate.blade') != null) {
-                $blade = config('impersonate.blade');
-            }
-
-            $bar = view($blade);
+            $bar = view(config('impersonate.blade'));
 
             $content = $response->content();
 

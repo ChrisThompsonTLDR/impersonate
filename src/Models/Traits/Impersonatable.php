@@ -2,41 +2,57 @@
 
 namespace Christhompsontldr\Impersonate\Models\Traits;
 
+use App\Models\User;
+use Christhompsontldr\Impersonate\Events\ImpersonatingStart;
+use Christhompsontldr\Impersonate\Events\ImpersonatingStop;
+
 trait Impersonatable
 {
 
     /**
      * Start impersonating this user
      *
-     * @param integer $id user.id to impersonate
+     * @param User $user the user that is being impersonated
+     *
+     * @return void
      */
-    public function startImpersonating($id)
+    public function startImpersonating(User $user): void
     {
-        session()->put('impersonate', $id);
+        session()->put('impersonate', $user->id);
+
+        event(new ImpersonatingStart(auth()->user(), $user));
     }
 
     /**
      * Stop impersonating
+     *
+     * @return void
      */
-    public function stopImpersonating()
+    public function stopImpersonating(): void
     {
-        session()->forget('impersonate');
+        if ($user = User::find(session()->pull('impersonate'))) {
+            event(new ImpersonatingStop(auth()->user(), $user));
+        }
     }
 
     /**
      * Is the user currently impersonating another user
+     *
+     * @return void
      */
-    public function isImpersonating()
+    public function isImpersonating(): bool
     {
         return session()->has('impersonate');
     }
 
     /**
-     * Logic for checking if the current user can impersonate the user id.
+     * Logic for checking if the logged in user can impersonate another user
      *
-     * @param integer $id user.id of the user the logged in user wants to impersonate
+     * @param User $user the user that is about to be impersonated
+     *
+     * @return bool
      */
-    public function canImpersonate($id)
+    public function canImpersonate(User $user): bool
     {
         return false;
     }

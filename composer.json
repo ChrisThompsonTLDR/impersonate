@@ -14,9 +14,6 @@
         "source": "https://github.com/christhompsontldr/impersonate"
     },
     "minimum-stability": "dev",
-    "require": {
-        "kkszymanowski/traitor": "^0.2.0"
-    },
     "autoload": {
         "psr-4": {
             "Christhompsontldr\\Impersonate\\": "src/"

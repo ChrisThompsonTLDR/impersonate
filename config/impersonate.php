@@ -4,7 +4,7 @@ return [
 
     'routes' => [
         'prefix'          => '',
-        'start'           => 'impersonate/{id}',
+        'start'           => 'impersonate/{user}',
         'stop'            => 'impersonate/stop',
         'afterStart'      => '/',  //  where user goes after starting impersonation
         'afterStop'       => '/',  //  where user goes after stopping impersonation

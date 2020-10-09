@@ -3,6 +3,7 @@
 namespace Christhompsontldr\Impersonate\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Christhompsontldr\Impersonate\Events\ImpersonatingStart;
 use Christhompsontldr\Impersonate\Events\ImpersonatingStop;
 
@@ -14,29 +15,18 @@ class ImpersonateController extends Controller
      *
      * @param integer $id user.id that will be impersonated
      */
-    public function start($id)
+    public function start(User $user)
     {
-        // valid user
-        $userModel = config('auth.providers.users.model', 'App\User');
-
-        $user = $userModel::findOrFail($id);
-
-        //  successful
-        if ($user && auth()->user()->canImpersonate($id)) {
-            $realUser = auth()->user();
-
-            auth()->user()->startImpersonating($user->id);
-
-            session()->flash(config('impersonate.flash.success', 'success'), 'Impersonation started.');
-
-            event(new ImpersonatingStart($realUser, $user));
-
-            return redirect()->to(config('impersonate.routes.afterStart', '/'));
+        if (!auth()->user()->canImpersonate($user)) {
+            return back()
+                ->withError('You can not impersonate that user.');
         }
 
-        session()->flash(config('impersonate.flash.error', 'error'), 'You can not impersonate that user.');
+        auth()->user()->startImpersonating($user);
 
-        return redirect()->back();
+        return redirect()
+            ->to(config('impersonate.routes.afterStart', '/'))
+            ->withSuccess('Impersonation started.');
     }
 
     /**

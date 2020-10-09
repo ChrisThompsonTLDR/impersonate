@@ -1,6 +1,4 @@
-## Impersonate
-
-Allow a user to impersonate another user.
+This Laravel package allows a user to impersonate another user.
 
 ## Installation
 
@@ -12,33 +10,20 @@ Require this package with composer:
 composer require christhompsontldr/impersonate
 ```
 
-### Service Provider
+### Model
 
-After updating composer, add the ServiceProvider to the providers array in config/app.php
-
-#### Laravel 5.4 or below:
+Update your user model to be impersonatable.
 
 ```
-Christhompsontldr\Impersonate\ImpersonateServiceProvider::class,
+namespace App\Models;
+
+use Christhompsontldr\Impersonate\Models\Traits\Impersonatable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
+class User extends Authenticatable
+{
+    use Impersonatable;
 ```
-
-#### Laravel 5.5 or above will auto discover the needed service provider.
-
-### Setup
-
-This will apply a trait to the user model configured in `config/auth.php`.  `setup` runs both the `add-trait` and `publish` commands.
-
-```
-php artisan impersonate:setup
-```
-
-This will run two commands (which can be run independently):
-```
-php artisan impersonate:add-trait
-php artisan impersonate:publish
-```
-
-`publish` publishes the config and `add-trait` applies a trait to the user model.
 
 ## Access Control
 
@@ -64,11 +49,10 @@ public function canImpersonate($id)
 }
 ```
 
-
 ## Issues
 
 Log out will be performed on both the main user and the impersonated user.
 
 ## Source
 
-This package is based off an [this example](http://blog.mauriziobonani.com/easily-impersonate-any-user-in-a-laravel-application/).
+This package is based on [this example](http://blog.mauriziobonani.com/easily-impersonate-any-user-in-a-laravel-application/).
