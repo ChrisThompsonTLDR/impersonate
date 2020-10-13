@@ -34,7 +34,7 @@ The authorized users that can impersonate and which users they can impersonate i
 In this example, the user model has an `is_admin` attribute that is being checked.
 
 ```
-public function canImpersonate($id)
+public function canImpersonate(User $user)
 {
     return $this->is_admin ?: false;
 }
@@ -43,15 +43,21 @@ public function canImpersonate($id)
 Or if you are using [Laratrust](https://github.com/santigarcor/laratrust)
 
 ```
-public function canImpersonate($id)
+public function canImpersonate(User $user)
 {
+    // can't impersonate other admins
+    if ($user->hasRole('admin')) {
+        return false;
+    }
+
+    // current user is admin
     return $this->hasRole('admin');
 }
 ```
 
 ## Issues
 
-Log out will be performed on both the main user and the impersonated user.
+Logout will be performed on both the main user and the impersonated user.
 
 ## Source
 
